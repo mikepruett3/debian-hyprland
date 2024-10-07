@@ -31,3 +31,7 @@
     path: /etc/apt/sources.list
     regexp: 'bookworm'
     replace: 'trixie'
+
+- name: "Update repositories cache"
+  ansible.builtin.apt:
+    update_cache: true
