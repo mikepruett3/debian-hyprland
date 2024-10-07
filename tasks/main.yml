@@ -21,3 +21,8 @@
     - regexp: "^#PERCENT="
       line: 'PERCENT=25'
 
+- name: "Change the sources.list to use trixie instead of bookworm"
+  ansible.builtin.replace:
+    path: /etc/apt/sources.list
+    regexp: 'bookworm'
+    replace: 'trixie'
