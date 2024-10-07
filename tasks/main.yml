@@ -1,2 +1,28 @@
 ---
 # tasks file for debian-hyprland
+- name: "Install required packages"
+  ansible.builtin.apt:
+    deb: "{{ item }}"
+    state: present
+  with_items:
+    - zram-tools
+    - curl
+    - git
+    - ansible
+
+- name: "Remove comment from ALGO setting in zramswap configuration file"
+  ansible.builtin.replace:
+    path: /etc/default/zramswap
+    regexp: '{{ item.regexp }}'
+    replace: '{{ item.replace }}'
+  with_items:
+    - regexp: '^ALGO='
+      replace: '\1'
+    - regexp: "^PERCENT="
+      replace: '\1'
+
+#- name: "Configure PERCENT setting in zramswap configuration file"
+#  ansible.builtin.lineinfile:
+#    path: /etc/default/zramswap
+#    regexp: "^PERCENT="
+#    line: "PERCENT=25"
