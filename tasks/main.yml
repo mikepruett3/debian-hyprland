@@ -16,9 +16,9 @@
     regexp: '{{ item.regexp }}'
     replace: '{{ item.replace }}'
   with_items:
-    - regexp: '^ALGO='
+    - regexp: '^#ALGO='
       replace: '\1'
-    - regexp: "^PERCENT="
+    - regexp: "^#PERCENT="
       replace: '\1'
 
 #- name: "Configure PERCENT setting in zramswap configuration file"
