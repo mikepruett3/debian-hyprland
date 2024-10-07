@@ -62,3 +62,6 @@
     - pavucontrol
     - pamixer
     - pulsemixer
+
+- name: "Reboot the machine"
+  ansible.builtin.reboot:
