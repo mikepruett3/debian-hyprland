@@ -1,38 +1,103 @@
-Role Name
+Debian Hyperland
 =========
 
-A brief description of the role goes here.
+An Ansible playbook that installs Hyprland on Debian 12 machines
 
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
+Getting Started (Debian Install)
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+- Install Debian 12 from netinstall ISO
+- Flash ISO onto USB flash disk (rufus, etecher, etc..)
+- Insert USB flash disk into the machine you want to install, and reboot
+- On reboot, select the USB flash disk to boot
+- On Debian launch, select the normal "Graphical Install"
+- Install Debian like normal, except when you get to the Install Packages option
+- Unselect the following:
+  - Debian desktop environment
+  - Gnome
+- Select the "SSH server"
+- Continue install as normal
+- Click continue to reboot
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Installing Prerequisites
+----------------
 
-License
--------
+- Login into the new Debian machine, using the credentials you created during install
+- Run `su`
 
-BSD
+```bash
+su
+```
 
-Author Information
-------------------
+- Install `sudo` package
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+```bash
+apt install sudo
+```
+
+- Add your useraccount to the `sudo` and `input` groups
+
+```bash
+/sbin/usermod -aG sudo,input <username>
+```
+
+- Run `visudo` (optional)
+
+```bash
+/sbin/visudo
+```
+
+- Change the `%sudo` group to not require password (optional)
+
+```bash
+    change %sudo   ALL=(ALL:ALL) ALL
+    to %sudo   ALL=(ALL) NOPASSWD:ALL
+```
+
+- Save and exit `visudo`
+- Exit and re-login
+
+```bash
+exit
+```
+
+- Install the following prerequisites packages
+
+```bash
+sudo apt install curl git ansible
+```
+
+- Clone the repository from github
+
+```bash
+git clone https://github.com/mikepruett3/debian-hyprland.git
+```
+
+- Run the `hyprland.yaml` playbook (Its going to take a while...)
+
+```bash
+ansible-playbook hyprland.yaml
+```
+
+- After the playbook finishes, reboot the machine
+
+```bash
+/sbin/reboot
+```
+
+Using my dotfiles (Optional)
+----------------
+
+I have pretty basic configurations in my dotfiles repo, that manage several Hyprland configurations. Your more than welcome to try them.
+
+I use `chezmoi` to manage my dotfiles, so you will need to install `chezmoi` to get them.
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply mikepruett3
+```
+
+My dotfiles also include a bootstrap script to install a bunch of my most-used utilities and apps. One of which is `tailscale`. If you are using `tailscale` like I am, after `chezmoi` does its thing, run the folloing to join your machine to the tailnet...
+
+```bash
+sudo tailscale up
+```
