@@ -11,10 +11,10 @@
     - ansible
 
 - name: "Remove comment from ALGO setting in zramswap configuration file"
-  ansible.builtin.replace:
+  ansible.builtin.lineinfile:
     path: /etc/default/zramswap
     regexp: '^#ALGO='
-    replace: '\1'
+    line: 'ALGO=lz4'
   #  regexp: '{{ item.regexp }}'
   #  replace: '{{ item.replace }}'
   #with_items:
