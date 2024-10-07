@@ -2,7 +2,7 @@
 # tasks file for debian-hyprland
 - name: "Install required packages"
   ansible.builtin.apt:
-    deb: "{{ item }}"
+    name: "{{ item }}"
     state: present
   with_items:
     - zram-tools
