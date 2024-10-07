@@ -13,13 +13,15 @@
 - name: "Remove comment from ALGO setting in zramswap configuration file"
   ansible.builtin.replace:
     path: /etc/default/zramswap
-    regexp: '{{ item.regexp }}'
-    replace: '{{ item.replace }}'
-  with_items:
-    - regexp: '^#ALGO='
-      replace: '\1'
-    - regexp: "^#PERCENT="
-      replace: '\1'
+    regexp: '^#ALGO='
+    replace: '\1'
+  #  regexp: '{{ item.regexp }}'
+  #  replace: '{{ item.replace }}'
+  #with_items:
+  #  - regexp: '^#ALGO='
+  #    replace: '\1'
+  #  - regexp: "^#PERCENT="
+  #    replace: '\1'
 
 #- name: "Configure PERCENT setting in zramswap configuration file"
 #  ansible.builtin.lineinfile:
